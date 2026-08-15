@@ -1,0 +1,129 @@
+// Afficher/masquer les champs "Autre" pour les sélecteurs
+function toggleCustomInput(selectId, targetGroupId) {
+  const select = document.getElementById(selectId);
+  const targetGroup = document.getElementById(targetGroupId);
+  
+  if (select.value === 'Autre') {
+    targetGroup.classList.remove('hidden');
+    targetGroup.querySelector('input').focus();
+  } else {
+    targetGroup.classList.add('hidden');
+  }
+}
+
+// Afficher/masquer les champs "Autre" pour les cases à cocher
+function toggleCheckboxCustomInput(checkboxId, targetGroupId) {
+  const checkbox = document.getElementById(checkboxId);
+  const targetGroup = document.getElementById(targetGroupId);
+  
+  if (checkbox.checked) {
+    targetGroup.classList.remove('hidden');
+    targetGroup.querySelector('input').focus();
+  } else {
+    targetGroup.classList.add('hidden');
+  }
+}
+
+// Génération du Prompt
+document.getElementById('generateBtn').addEventListener('click', () => {
+
+  // 1. Format
+  let category = document.getElementById('category').value;
+  if (category === 'Autre') category = document.getElementById('customCategory').value || 'Format Web Sur-Mesure';
+
+  // 2. Activité
+  let activity = document.getElementById('activity').value;
+  if (activity === 'Autre') activity = document.getElementById('customActivity').value || 'Activité spécifique';
+
+  // 3. Style Visuel
+  let style = document.getElementById('style').value;
+  if (style === 'Autre') style = document.getElementById('customStyle').value || 'Style personnalisé';
+
+  // 4. Couleurs
+  let colors = document.getElementById('colorTheme').value;
+  if (colors === 'Autre') colors = document.getElementById('customColor').value || 'Palette sur-mesure';
+
+  // 5. Effets Visuels
+  let effects = [];
+  document.querySelectorAll('.effect:checked').forEach(cb => {
+    if (cb.value !== 'Autre') effects.push(cb.value);
+  });
+  if (document.getElementById('effectOtherCheck').checked) {
+    const customEff = document.getElementById('customEffect').value;
+    if (customEff) effects.push(customEff);
+  }
+  const effectsText = effects.length > 0 ? effects.join(', ') : 'Animations fluides CSS standard';
+
+  // 6. Fonctionnalités / Modules
+  let features = [];
+  document.querySelectorAll('.feature:checked').forEach(cb => {
+    if (cb.value !== 'Autre') features.push(cb.value);
+  });
+  if (document.getElementById('featureOtherCheck').checked) {
+    const customFeat = document.getElementById('customFeature').value;
+    if (customFeat) features.push(customFeat);
+  }
+  const featuresText = features.length > 0 ? features.join(', ') : 'Formulaire de contact dynamique';
+
+  // 7. Objectif
+  const goal = document.getElementById('goal').value || 'Mettre en valeur les services et convertir les visiteurs';
+
+  // Contrôle
+  if (!category || !activity || !style) {
+    alert('Merci de remplir au moins la catégorie, le secteur et le style visuel !');
+    return;
+  }
+
+  // Prompt Complet
+  const finalPrompt = `Agis comme un Développeur Web Fullstack Senior & Lead Designer UI/UX.
+
+Génère le code complet, moderne et 100% responsive pour le projet web suivant :
+
+📌 FORMAT DE SITE : ${category}
+🎯 SECTEUR D'ACTIVITÉ : ${activity}
+🎨 STYLE VISUEL & UX : ${style}
+🎨 PALETTE DE COULEURS : ${colors}
+✨ EFFETS VISUELS & ANIMATIONS : ${effectsText}
+⚡ MODULES & FONCTIONNALITÉS : ${featuresText}
+🚀 OBJECTIF & CALL-TO-ACTION : ${goal}
+
+---
+
+📋 CONTRAT TECHNIQUE EXIGEANT :
+1. Structure en 3 Fichiers DISTINCTS : index.html, style.css et script.js.
+2. HTML5 Sémantique : Structure parfaite avec <header>, <main>, <section>, <footer> et balises meta SEO.
+3. CSS3 Ultra-Moderne : Utilisation de CSS Variables, Flexbox/Grid, Glassmorphism, animations fluides au survol et Responsive Mobile-First.
+4. JavaScript Vanille : Interactions fluides, animations interactives et gestion dynamique des événements sans dépendances lourdes.
+5. Typographie & Contrastes : Utilise des polices Google Fonts adaptées avec une lisibilité optimale.`;
+
+  // Affichage
+  const promptOutput = document.getElementById('promptOutput');
+  promptOutput.value = finalPrompt;
+
+  // Calcul du nombre de mots
+  const wordCount = finalPrompt.trim().split(/\s+/).length;
+  document.getElementById('wordCount').innerText = `${wordCount} mots`;
+
+  const resultContainer = document.getElementById('resultContainer');
+  resultContainer.classList.remove('hidden');
+  resultContainer.scrollIntoView({ behavior: 'smooth' });
+});
+
+// Copier dans le presse-papier
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const output = document.getElementById('promptOutput');
+  output.select();
+  navigator.clipboard.writeText(output.value);
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.innerHTML = `<i data-lucide="check"></i> Copié !`;
+  copyBtn.style.background = '#fe2c55';
+  copyBtn.style.color = '#fff';
+
+  setTimeout(() => {
+    copyBtn.innerHTML = `<i data-lucide="copy"></i> Copier le Prompt`;
+    copyBtn.style.background = '#25f4ee';
+    copyBtn.style.color = '#000';
+    lucide.createIcons();
+  }, 2000);
+});

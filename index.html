@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IA Prompt Web Studio — Thomas WebMaker</title>
+  
+  <!-- Assets & Fontes Modernes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Icônes Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Arrière-plan animé -->
+  <div class="glow-sphere sphere-1"></div>
+  <div class="glow-sphere sphere-2"></div>
+  <div class="grid-overlay"></div>
+
+  <main class="app-container">
+    
+    <!-- En-tête -->
+    <header class="app-header">
+      <div class="badge">
+        <i data-lucide="sparkles"></i> Thomas WebMaker Studio
+      </div>
+      <h1>Générateur de Prompt <span>Web 3D Pro</span></h1>
+      <p>Configure une architecture web complète et génère le prompt parfait pour ChatGPT & Claude.</p>
+    </header>
+
+    <form id="promptForm" onsubmit="return false;">
+      
+      <!-- 1. Catégorie -->
+      <div class="form-section">
+        <label for="category"><i data-lucide="layout-template"></i> 1. Format & Structure du Site</label>
+        <select id="category" required onchange="toggleCustomInput('category', 'customCategoryGroup')">
+          <option value="">-- Choisir un format --</option>
+          <option value="Landing Page High-Converting (Page unique)">Landing Page High-Converting (Sales Page)</option>
+          <option value="Site Vitrine Multi-pages (A propos, Services, Contact)">Site Vitrine Multi-pages</option>
+          <option value="Portfolio Créatif / Galerie 3D Showroom">Portfolio Créatif / 3D Showroom</option>
+          <option value="Boutique E-commerce / Shop Moderne">Boutique E-commerce Moderne</option>
+          <option value="SaaS Platform / Dashboard Web App">SaaS Platform / Web App Dashboard</option>
+          <option value="Blog / Site Média interactif">Blog / Site Média interactif</option>
+          <option value="Autre">Autre...</option>
+        </select>
+        <div class="sub-input hidden" id="customCategoryGroup">
+          <input type="text" id="customCategory" placeholder="Précise le format (ex: Site Événementiel, Wiki...)">
+        </div>
+      </div>
+
+      <!-- 2. Secteur / Activité -->
+      <div class="form-section">
+        <label for="activity"><i data-lucide="briefcase"></i> 2. Secteur d'activité & Niche</label>
+        <select id="activity" required onchange="toggleCustomInput('activity', 'customActivityGroup')">
+          <option value="">-- Choisir un secteur --</option>
+          <option value="Restauration & Gastronomie">Restauration & Gastronomie</option>
+          <option value="Coaching, Formation & Masterclass">Coaching, Formation & Masterclass</option>
+          <option value="Artisanat, BTP & Immoblier">Artisanat, BTP & Immobilier</option>
+          <option value="Mode, Beauté & Bien-être">Mode, Beauté & Bien-être</option>
+          <option value="Tech, IA & Agency B2B">Tech, IA & Agence B2B</option>
+          <option value="Création de contenu, Musique & Stream">Créateur de contenu / Artiste</option>
+          <option value="Autre">Autre...</option>
+        </select>
+        <div class="sub-input hidden" id="customActivityGroup">
+          <input type="text" id="customActivity" placeholder="Précise le secteur d'activité...">
+        </div>
+      </div>
+
+      <!-- 3. Direction Artistique -->
+      <div class="form-section">
+        <label for="style"><i data-lucide="palette"></i> 3. Style Visuel & UX</label>
+        <select id="style" required onchange="toggleCustomInput('style', 'customStyleGroup')">
+          <option value="">-- Choisir un style --</option>
+          <option value="Dark Mode Cyberpunk Néon & Glow (High-Tech)">Dark Mode Cyberpunk Néon</option>
+          <option value="Minimaliste Luxe, Haute Couture & Typography">Minimaliste Luxe & Clean</option>
+          <option value="Glassmorphism / Frosted Glass Moderne">Glassmorphism & Frosted Glass</option>
+          <option value="Organique, Warm Terracotta & Nature">Organique & Terracotta Warm</option>
+          <option value="Neumorphism / Soft UI B2B">Neumorphism / Soft UI</option>
+          <option value="Retro Synthwave 80s & Brutalisme">Retro Synthwave & Brutalisme</option>
+          <option value="Autre">Autre...</option>
+        </select>
+        <div class="sub-input hidden" id="customStyleGroup">
+          <input type="text" id="customStyle" placeholder="Précise la direction artistique...">
+        </div>
+      </div>
+
+      <!-- 4. Palette de Couleurs -->
+      <div class="form-section">
+        <label for="colorTheme"><i data-lucide="droplet"></i> 4. Thème de Couleurs Principales</label>
+        <select id="colorTheme" onchange="toggleCustomInput('colorTheme', 'customColorGroup')">
+          <option value="Cyan Néon (#25F4EE) & Magenta (#FE2C55)">Cyan Néon & Magenta (Style TikTok/Cyber)</option>
+          <option value="Noir Profond, Doré & Blanc Chaud">Luxe (Noir Profond & Or)</option>
+          <option value="Bleu Électrique, Violet & Indigo">Tech (Bleu Électrique & Violet SaaS)</option>
+          <option value="Vert Émeraude, Beige & Terracotta">Nature (Vert Émeraude & Beige)</option>
+          <option value="Monochrome Noir, Gris Anthracite & Blanc">Monochrome Noir & Blanc</option>
+          <option value="Autre">Autre...</option>
+        </select>
+        <div class="sub-input hidden" id="customColorGroup">
+          <input type="text" id="customColor" placeholder="Précise tes codes couleurs (ex: #ff5733 et #111827)...">
+        </div>
+      </div>
+
+      <!-- 5. Animations & Effets Visuels -->
+      <fieldset class="form-section">
+        <legend><i data-lucide="wand-2"></i> 5. Animations & Effets Dynamiques</legend>
+        <div class="checkbox-grid">
+          <label class="checkbox-card">
+            <input type="checkbox" value="Arrière-plan interactif 3D avec Three.js" class="effect">
+            <span>Particules Three.js 3D</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" value="Effets de survol 3D Tilt sur les cartes" class="effect">
+            <span>Effet Carte 3D Tilt</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" value="Bouton Switch Dark/Light Mode" class="effect">
+            <span>Toggle Mode Sombre/Clair</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" value="Animations au scroll (Fade/Slide in)" class="effect">
+            <span>Animations au Scroll</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" id="effectOtherCheck" value="Autre" onchange="toggleCheckboxCustomInput('effectOtherCheck', 'customEffectGroup')">
+            <span>Autre effet...</span>
+          </label>
+        </div>
+        <div class="sub-input hidden" id="customEffectGroup">
+          <input type="text" id="customEffect" placeholder="Précise l'effet souhaité (ex: Effet curseur personnalisé)...">
+        </div>
+      </fieldset>
+
+      <!-- 6. Fonctionnalités & Modules -->
+      <fieldset class="form-section">
+        <legend><i data-lucide="cpu"></i> 6. Modules & Intégrations</legend>
+        <div class="checkbox-grid">
+          <label class="checkbox-card">
+            <input type="checkbox" value="Formulaire de contact dynamique sécurisé" class="feature">
+            <span>Formulaire dynamique</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" value="Bouton de réservation WhatsApp / Calendly direct" class="feature">
+            <span>Bouton WhatsApp/Calendly</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" value="Galerie / Portfolio filtrable par catégorie" class="feature">
+            <span>Galerie filtrable</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" value="Avis clients en carousel interactif" class="feature">
+            <span>Carousel Témoignages</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" value="Section FAQ dynamique avec accordéon" class="feature">
+            <span>FAQ Accordéon</span>
+          </label>
+          <label class="checkbox-card">
+            <input type="checkbox" id="featureOtherCheck" value="Autre" onchange="toggleCheckboxCustomInput('featureOtherCheck', 'customFeatureGroup')">
+            <span>Autre module...</span>
+          </label>
+        </div>
+        <div class="sub-input hidden" id="customFeatureGroup">
+          <input type="text" id="customFeature" placeholder="Précise la fonctionnalité (ex: Calculateur de devis)...">
+        </div>
+      </fieldset>
+
+      <!-- 7. Objectif principal -->
+      <div class="form-section">
+        <label for="goal"><i data-lucide="target"></i> 7. Objectif principal (Call-To-Action)</label>
+        <input type="text" id="goal" placeholder="Ex: Obtenir des demandes de réservation / Vendre une formation" required>
+      </div>
+
+      <!-- Boutons d'Action -->
+      <div class="button-group">
+        <button type="button" id="generateBtn" class="btn-primary">
+          <i data-lucide="zap"></i> Générer le Prompt Sur-Mesure
+        </button>
+        <button type="reset" id="resetBtn" class="btn-reset">
+          <i data-lucide="rotate-ccw"></i> Reset
+        </button>
+      </div>
+    </form>
+
+    <!-- Zone de Résultat -->
+    <section class="result-container hidden" id="resultContainer">
+      <div class="result-header">
+        <div class="result-title">
+          <i data-lucide="terminal"></i>
+          <h2>Prompt Généré</h2>
+        </div>
+        <div class="stats-badge">
+          <span id="wordCount">0 mots</span>
+        </div>
+      </div>
+
+      <textarea id="promptOutput" readonly></textarea>
+
+      <div class="action-bar">
+        <button id="copyBtn" class="btn-secondary">
+          <i data-lucide="copy"></i> Copier le Prompt
+        </button>
+        <a id="openChatGptBtn" href="https://chat.openai.com" target="_blank" class="btn-external btn-chatgpt">
+          <i data-lucide="external-link"></i> ChatGPT
+        </a>
+        <a id="openClaudeBtn" href="https://claude.ai/new" target="_blank" class="btn-external btn-claude">
+          <i data-lucide="sparkle"></i> Claude AI
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Initialiser les icônes Lucide
+    lucide.createIcons();
+  </script>
+</body>
+</html>
