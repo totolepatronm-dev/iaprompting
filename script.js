@@ -43,7 +43,21 @@ document.getElementById('generateBtn').addEventListener('click', () => {
   let colors = document.getElementById('colorTheme').value;
   if (colors === 'Autre') colors = document.getElementById('customColor').value || 'Palette sur-mesure';
 
-  // 5. Effets Visuels
+  // 5. Réseaux Sociaux (NOUVEAU)
+  const ytUrl = document.getElementById('youtubeUrl').value.trim();
+  const tiktokUrl = document.getElementById('tiktokUrl').value.trim();
+  const instaUrl = document.getElementById('instagramUrl').value.trim();
+
+  let socialDetails = [];
+  if (ytUrl) socialDetails.push(`YouTube (${ytUrl}) : Inclure un lecteur vidéo intégré (iFrame / Feed) esthétique`);
+  if (tiktokUrl) socialDetails.push(`TikTok (${tiktokUrl}) : Inclure une section feed vidéo / cartes interactives TikTok`);
+  if (instaUrl) socialDetails.push(`Instagram (${instaUrl}) : Inclure un carrousel / galerie d'images style Instagram avec badges direct link`);
+
+  const socialText = socialDetails.length > 0 
+    ? socialDetails.join(' | ') 
+    : 'Aucune URL fournie, mais prévoir un footer avec liens sociaux stylisés (YouTube, TikTok, Instagram).';
+
+  // 6. Effets Visuels
   let effects = [];
   document.querySelectorAll('.effect:checked').forEach(cb => {
     if (cb.value !== 'Autre') effects.push(cb.value);
@@ -54,7 +68,7 @@ document.getElementById('generateBtn').addEventListener('click', () => {
   }
   const effectsText = effects.length > 0 ? effects.join(', ') : 'Animations fluides CSS standard';
 
-  // 6. Fonctionnalités / Modules
+  // 7. Fonctionnalités / Modules
   let features = [];
   document.querySelectorAll('.feature:checked').forEach(cb => {
     if (cb.value !== 'Autre') features.push(cb.value);
@@ -65,7 +79,7 @@ document.getElementById('generateBtn').addEventListener('click', () => {
   }
   const featuresText = features.length > 0 ? features.join(', ') : 'Formulaire de contact dynamique';
 
-  // 7. Objectif
+  // 8. Objectif
   const goal = document.getElementById('goal').value || 'Mettre en valeur les services et convertir les visiteurs';
 
   // Contrôle
@@ -74,15 +88,16 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     return;
   }
 
-  // Prompt Complet
+  // Prompt Complet Optimisé
   const finalPrompt = `Agis comme un Développeur Web Fullstack Senior & Lead Designer UI/UX.
 
-Génère le code complet, moderne et 100% responsive pour le projet web suivant :
+Génère le code complet, moderne, élégant et 100% responsive pour le projet web suivant :
 
 📌 FORMAT DE SITE : ${category}
 🎯 SECTEUR D'ACTIVITÉ : ${activity}
 🎨 STYLE VISUEL & UX : ${style}
 🎨 PALETTE DE COULEURS : ${colors}
+📱 INTÉGRATION RÉSEAUX SOCIAUX & MÉDIAS : ${socialText}
 ✨ EFFETS VISUELS & ANIMATIONS : ${effectsText}
 ⚡ MODULES & FONCTIONNALITÉS : ${featuresText}
 🚀 OBJECTIF & CALL-TO-ACTION : ${goal}
@@ -91,10 +106,11 @@ Génère le code complet, moderne et 100% responsive pour le projet web suivant 
 
 📋 CONTRAT TECHNIQUE EXIGEANT :
 1. Structure en 3 Fichiers DISTINCTS : index.html, style.css et script.js.
-2. HTML5 Sémantique : Structure parfaite avec <header>, <main>, <section>, <footer> et balises meta SEO.
-3. CSS3 Ultra-Moderne : Utilisation de CSS Variables, Flexbox/Grid, Glassmorphism, animations fluides au survol et Responsive Mobile-First.
-4. JavaScript Vanille : Interactions fluides, animations interactives et gestion dynamique des événements sans dépendances lourdes.
-5. Typographie & Contrastes : Utilise des polices Google Fonts adaptées avec une lisibilité optimale.`;
+2. HTML5 Sémantique : Structure propre avec <header>, <main>, <section>, <footer> et balises SEO OpenGraph.
+3. Intégration Médias Réseaux : Intègre des cartes médias modernes avec accès direct et pré-visualisation dynamique pour les réseaux spécifiés.
+4. CSS3 Ultra-Moderne : CSS Variables, Flexbox/Grid, Glassmorphism, effets au survol, animations fluides et Responsive Mobile-First.
+5. JavaScript Vanille : Interaction fluide, filtres/animations dynamiques et gestion d'événements sans dépendances lourdes.
+6. Typographie & Contrastes : Utilise des polices Google Fonts lisibles et adaptées au style visuel choisi.`;
 
   // Affichage
   const promptOutput = document.getElementById('promptOutput');
@@ -117,8 +133,8 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
   const copyBtn = document.getElementById('copyBtn');
   copyBtn.innerHTML = `<i data-lucide="check"></i> Copié !`;
-  copyBtn.style.background = '#fe2c55';
-  copyBtn.style.color = '#fff';
+  copyBtn.style.background = '#25f4ee';
+  copyBtn.style.color = '#000';
 
   setTimeout(() => {
     copyBtn.innerHTML = `<i data-lucide="copy"></i> Copier le Prompt`;
@@ -126,4 +142,10 @@ document.getElementById('copyBtn').addEventListener('click', () => {
     copyBtn.style.color = '#000';
     lucide.createIcons();
   }, 2000);
+});
+
+// Recharger les icônes lors du reset du formulaire
+document.getElementById('resetBtn').addEventListener('click', () => {
+  document.getElementById('resultContainer').classList.add('hidden');
+  document.querySelectorAll('.sub-input').forEach(el => el.classList.add('hidden'));
 });
